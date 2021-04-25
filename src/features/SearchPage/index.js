@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import * as searchAPI from "./searchAPI";
+import Menu from "../Menu";
 
 const Search = () => {
     const [url, setUrl] = useState("");
@@ -23,7 +24,8 @@ const Search = () => {
     };
     return (
         <div>
-            <form onSubmit={(e) => handleSubmit(e)}>
+            <Menu />
+            <form onSubmit={(e) => handleSubmit(e)} autocomplete={"off"}>
                 <TextField
                     id="outlined-full-width"
                     label="URL"

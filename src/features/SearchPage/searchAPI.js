@@ -62,5 +62,5 @@ const parseInstructions = (instructions) => {
 const writeToFirebase = (recipe) => {
     const recipeRef = firebase.database().ref("recipes");
     recipeRef.push(recipe);
-    console.log("writing to firebase", recipe);
+    // console.log("writing to firebase", recipe);
 };

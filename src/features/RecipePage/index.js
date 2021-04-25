@@ -1,27 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import firebase from "../../database/firebase";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import RenderList from "./RenderList";
+import Menu from "../Menu";
 
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
-import RestaurantIcon from "@material-ui/icons/Restaurant";
-import InfoIcon from "@material-ui/icons/Info";
-
-const useStyles = makeStyles({
-    root: {
-        width: 500,
-    },
-});
+import BottomNav from "./BottomNav";
+import * as recipePageSlice from "./recipePageSlice";
 
 const RecipePage = () => {
+    const page = useSelector(recipePageSlice.selectPage);
+
     const [recipe, setRecipe] = useState({});
-    const classes = useStyles();
-    const [page, setPage] = useState(0);
 
     useEffect(() => {
         const queryString = window.location.search;
@@ -34,25 +25,9 @@ const RecipePage = () => {
         const recipeRef = firebase.database().ref("recipes");
         const snapshot = await recipeRef.child(id).once("value");
         const value = snapshot.val();
-        console.log(value);
+        // console.log(value);
         setRecipe(value);
-        console.log(value);
-    };
-
-    const RenderList = ({ list }) => {
-        console.log(list);
-        console.log("rendinger ingredients", list);
-        return (
-            <React.Fragment>
-                <List dense={false}>
-                    {list.map((step, index) => (
-                        <ListItem key={index}>
-                            <ListItemText primary={step} />
-                        </ListItem>
-                    ))}
-                </List>
-            </React.Fragment>
-        );
+        // console.log(value);
     };
 
     const formatNutrition = (key) => {
@@ -77,7 +52,7 @@ const RecipePage = () => {
     };
 
     const SwitchPage = () => {
-        console.log("page", page);
+        // console.log("page", page);
         switch (parseInt(page)) {
             case 0:
                 if (recipe.recipeIngredient) {
@@ -95,10 +70,10 @@ const RecipePage = () => {
             case 2:
                 if (recipe.nutrition) {
                     const nutritionEntries = Object.entries(recipe.nutrition);
-                    console.log("nutritionEntries", nutritionEntries);
+                    // console.log("nutritionEntries", nutritionEntries);
                     const nutritionArray = nutritionEntries.map((item) => formatNutrition(item[0]) + ": " + item[1]);
 
-                    console.log("nutritionarray", nutritionArray);
+                    // console.log("nutritionarray", nutritionArray);
                     return <RenderList list={nutritionArray} />;
                 } else {
                     return <h6>Loading Nutrition</h6>;
@@ -108,21 +83,10 @@ const RecipePage = () => {
 
     return (
         <div>
+            <Menu />
             {recipe ? recipe.name : null}
             {recipe ? <SwitchPage /> : null}
-            <BottomNavigation
-                value={page}
-                onChange={(event, newValue) => {
-                    console.log("newValue", newValue);
-                    setPage(newValue);
-                }}
-                showLabels
-                className={classes.root}
-            >
-                <BottomNavigationAction label="Ingredients" icon={<RestaurantIcon />} />
-                <BottomNavigationAction label="Steps" icon={<FormatListNumberedIcon />} />
-                <BottomNavigationAction label="Nutrition" icon={<InfoIcon />} />
-            </BottomNavigation>
+            <BottomNav />
         </div>
     );
 };

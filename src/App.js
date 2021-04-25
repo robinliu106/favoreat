@@ -1,10 +1,10 @@
 import React from "react";
 
 import { Counter } from "./features/counter/Counter";
-import RecipeList from "./features/RecipeList";
+import AllRecipes from "./features/AllRecipes";
 import RecipePage from "./features/RecipePage";
 
-import Search from "./features/search";
+import SearchPage from "./features/SearchPage";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -13,8 +13,8 @@ function App() {
         <div>
             <Router>
                 <Switch>
-                    <Route exact path="/" component={RecipeList} />
-                    <Route path="/search" component={Search} />
+                    <Route exact path="/" component={AllRecipes} />
+                    <Route path="/search" component={SearchPage} />
                     <Route path="/recipe" component={RecipePage} />
                 </Switch>
             </Router>

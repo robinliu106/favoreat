@@ -3,7 +3,7 @@ import firebase from "../../database/firebase";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-
+import Menu from "../Menu";
 const RecipeList = () => {
     const [recipes, setRecipes] = useState();
 
@@ -17,9 +17,9 @@ const RecipeList = () => {
             let items = snapshot.val();
             let newState = [];
             for (let id in items) {
-                console.log(id);
+                // console.log(id);
                 items[id].id = id;
-                console.log(items[id]);
+                // console.log(items[id]);
 
                 newState.push(items[id]);
             }
@@ -47,7 +47,12 @@ const RecipeList = () => {
             </React.Fragment>
         );
     };
-    return <div>{recipes ? <RenderRecipes /> : null}</div>;
+    return (
+        <div>
+            <Menu />
+            {recipes ? <RenderRecipes /> : null}
+        </div>
+    );
 };
 
 export default RecipeList;
