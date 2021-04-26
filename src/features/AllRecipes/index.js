@@ -42,7 +42,7 @@ const RecipeList = () => {
                             key={recipe.id}
                         >
                             <ListItemText primary={recipe.name} />
-                            <Score rating={recipe.rating} />
+                            <Score rating={recipe.rating} edit={false} />
                         </ListItem>
                     ))}
                 </List>

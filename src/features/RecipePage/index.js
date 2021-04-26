@@ -64,14 +64,14 @@ const RecipePage = () => {
         switch (parseInt(page)) {
             case 0:
                 if (recipe.recipeIngredient) {
-                    return <RenderPage list={recipe.recipeIngredient} />;
+                    return <RenderPage list={recipe.recipeIngredient} id={id} page={"recipeIngredient"} />;
                 } else {
                     return <SkeletonLoader />;
                 }
 
             case 1:
                 if (recipe.recipeInstructions) {
-                    return <RenderPage list={recipe.recipeInstructions} />;
+                    return <RenderPage list={recipe.recipeInstructions} id={id} page={"recipeInstructions"} />;
                 } else {
                     return <SkeletonLoader />;
                 }
