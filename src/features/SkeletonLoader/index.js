@@ -1,8 +1,8 @@
 import React from "react";
 import "./SkeletonLoader.css";
 
-const SkeletonLoader = ({ num = 10 }) => {
-    const blankArray = new Array(5).fill(0);
+const SkeletonLoader = ({ len = 10 }) => {
+    const blankArray = new Array(len).fill(0);
     return (
         <div className="container-sm">
             <div className="row">

@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { List, ListItem, ListItemText, IconButton, Checkbox } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import TextField from "@material-ui/core/TextField";
-import firebase from "../../database/firebase";
+import { useSelector, useDispatch } from "react-redux";
+import * as firebaseSlice from "../../database/firebaseSlice";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
 const RenderPage = ({ list, id = null, page }) => {
-    const recipeRef = firebase.database().ref("recipes");
+    const dispatch = useDispatch();
 
     const [editMode, setEditMode] = useState(false);
     const [DisplayList, setDisplayList] = useState(list);
@@ -14,16 +16,11 @@ const RenderPage = ({ list, id = null, page }) => {
     const initialCheckbox = new Array(list.length).fill(false);
     const [checkBoxes, setCheckBoxes] = useState(initialCheckbox);
 
-    useEffect(() => {}, []);
-
     const equals = (a, b) => a.length === b.length && a.every((v, i) => v === b[i]);
 
     const handleEditButton = () => {
         if (editMode === true && id != null && !equals(DisplayList, EditList)) {
-            console.log("saving", id, EditList, page);
-            recipeRef.child(id).update({
-                [page]: EditList,
-            });
+            dispatch(firebaseSlice.updateAsync({ id, key: page, value: EditList }));
         }
         setDisplayList(EditList);
         setEditMode(!editMode);
@@ -31,16 +28,21 @@ const RenderPage = ({ list, id = null, page }) => {
 
     const handleItemChange = (e) => {
         EditList[parseInt(e.target.id)] = e.target.value;
-        console.log(EditList);
     };
 
     const handleCheckboxChange = (e) => {
-        // e.preventDefault();
         let tempArray = [...checkBoxes];
         let index = parseInt(e.target.id);
         tempArray[index] = !tempArray[index];
         setCheckBoxes(tempArray);
-        console.log("checkbox changed", checkBoxes);
+    };
+
+    const handleDeleteButton = () => {
+        console.log("handle delete button");
+        if (editMode === true && id != null) {
+            console.log("running delete");
+            dispatch(firebaseSlice.deleteAsync({ id }));
+        }
     };
 
     const NormalMode = () => {
@@ -93,6 +95,11 @@ const RenderPage = ({ list, id = null, page }) => {
             <IconButton onClick={handleEditButton}>
                 <EditIcon />
             </IconButton>
+            {editMode ? (
+                <IconButton onClick={handleDeleteButton}>
+                    <DeleteOutlineIcon />
+                </IconButton>
+            ) : null}
             {editMode ? <EditMode /> : <NormalMode />}
         </React.Fragment>
     );

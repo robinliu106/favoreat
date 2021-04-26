@@ -9,6 +9,7 @@ import Score from "../Score";
 import RenderPage from "./RenderPage";
 import BottomNav from "./BottomNav";
 import SkeletonLoader from "../SkeletonLoader";
+import { Container, Grid } from "@material-ui/core";
 
 const RecipePage = () => {
     const recipeRef = firebase.database().ref("recipes");
@@ -66,14 +67,14 @@ const RecipePage = () => {
                 if (recipe.recipeIngredient) {
                     return <RenderPage list={recipe.recipeIngredient} id={id} page={"recipeIngredient"} />;
                 } else {
-                    return <SkeletonLoader />;
+                    return <SkeletonLoader len={recipe.recipeIngredient?.length} />;
                 }
 
             case 1:
                 if (recipe.recipeInstructions) {
                     return <RenderPage list={recipe.recipeInstructions} id={id} page={"recipeInstructions"} />;
                 } else {
-                    return <SkeletonLoader />;
+                    return <SkeletonLoader len={recipe.recipeInstructions?.length} />;
                 }
             case 2:
                 if (recipe.nutrition) {
@@ -82,7 +83,7 @@ const RecipePage = () => {
 
                     return <RenderPage list={nutritionArray} />;
                 } else {
-                    return <SkeletonLoader />;
+                    return <SkeletonLoader len={recipe.nutrition?.length} />;
                 }
         }
     };
@@ -98,11 +99,11 @@ const RecipePage = () => {
     };
 
     return (
-        <div>
+        <Container>
             <Menu />
             <PageInfo />
             <BottomNav />
-        </div>
+        </Container>
     );
 };
 

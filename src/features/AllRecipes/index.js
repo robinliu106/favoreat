@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import firebase from "../../database/firebase";
-import { List, ListItem, ListItemText } from "@material-ui/core";
+import { Container, List, ListItem, ListItemText } from "@material-ui/core";
 import Menu from "../Menu";
 import Score from "../Score";
 const RecipeList = () => {
@@ -44,10 +44,10 @@ const RecipeList = () => {
         );
     };
     return (
-        <div>
+        <Container>
             <Menu />
             {recipes ? <RenderRecipes /> : null}
-        </div>
+        </Container>
     );
 };
 

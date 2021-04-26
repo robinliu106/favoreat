@@ -1,5 +1,6 @@
-import $ from "cheerio";
 import firebase from "../../database/firebase";
+import $ from "cheerio";
+import { decode } from "html-entities";
 
 /**
  *
@@ -7,10 +8,6 @@ import firebase from "../../database/firebase";
  * @returns status
  */
 export const fetchURL = async (url) => {
-    // const url = "https://cooking.nytimes.com/recipes/4735-old-fashioned-beef-stew";
-    // const url = "https://www.aspicyperspective.com/bulgogi-korean-bbq";
-    // const url = "https://natashaskitchen.com/pan-seared-steak/";
-
     const response = await fetch(url);
     const rawHTML = await response.text();
     // const cleanHTML = sanitizeHTML(rawHTML);
@@ -20,7 +17,7 @@ export const fetchURL = async (url) => {
     const getScripts = parseHTML("script").toArray();
     const schemaNode = getScripts.find((script) => script.attribs.type === "application/ld+json");
 
-    const recipeSchema = schemaNode?.children[0]?.data ?? 404;
+    const recipeSchema = schemaNode?.children?.[0]?.data ?? 404;
     // console.log(recipeSchema);
     if (recipeSchema === 404) return 404;
 
@@ -37,7 +34,6 @@ export const fetchURL = async (url) => {
 
     console.log("recipe context", recipeContext);
 
-    // console.log("recipeContext", recipeContext);
     //Clean up the object
     delete recipeContext.nutrition["@context"];
     delete recipeContext.nutrition["@type"];
@@ -52,8 +48,10 @@ export const fetchURL = async (url) => {
     recipe["recipeInstructions"] = parseInstructions(recipeContext?.recipeInstructions) ?? null;
     recipe["rating"] = 0;
 
-    // return recipe;
-    writeToFirebase(recipe);
+    //write to firebase
+    const recipeRef = firebase.database().ref("recipes");
+    recipeRef.push(recipe);
+
     return "201";
 };
 
@@ -66,11 +64,7 @@ const sanitizeHTML = (text) => {
 const parseInstructions = (instructions) => {
     //Only getting HowToStep
     const HowToSteps = instructions.filter((step) => step["@type"] === "HowToStep");
-    return HowToSteps.map((item) => item.text);
-};
+    const array = HowToSteps.map((item) => decode(item.text));
 
-const writeToFirebase = (recipe) => {
-    const recipeRef = firebase.database().ref("recipes");
-    recipeRef.push(recipe);
-    // console.log("writing to firebase", recipe);
+    return array;
 };
