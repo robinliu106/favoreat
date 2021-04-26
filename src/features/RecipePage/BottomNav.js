@@ -1,6 +1,5 @@
 import React from "react";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import InfoIcon from "@material-ui/icons/Info";

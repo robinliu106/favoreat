@@ -7,7 +7,7 @@ import SearchPage from "./features/SearchPage";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-function App() {
+const App = () => {
     return (
         <div>
             <Router>
@@ -19,6 +19,6 @@ function App() {
             </Router>
         </div>
     );
-}
+};
 
 export default App;

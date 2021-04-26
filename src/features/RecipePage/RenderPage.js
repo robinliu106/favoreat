@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import IconButton from "@material-ui/core/IconButton";
+import { List, ListItem, ListItemText, IconButton, Checkbox } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import TextField from "@material-ui/core/TextField";
 import firebase from "../../database/firebase";
@@ -14,7 +11,10 @@ const RenderPage = ({ list, id = null, page }) => {
     const [DisplayList, setDisplayList] = useState(list);
     const EditList = [...DisplayList];
 
-    useEffect(() => {}, [DisplayList]);
+    const initialCheckbox = new Array(list.length).fill(false);
+    const [checkBoxes, setCheckBoxes] = useState(initialCheckbox);
+
+    useEffect(() => {}, []);
 
     const equals = (a, b) => a.length === b.length && a.every((v, i) => v === b[i]);
 
@@ -34,13 +34,31 @@ const RenderPage = ({ list, id = null, page }) => {
         console.log(EditList);
     };
 
+    const handleCheckboxChange = (e) => {
+        // e.preventDefault();
+        let tempArray = [...checkBoxes];
+        let index = parseInt(e.target.id);
+        tempArray[index] = !tempArray[index];
+        setCheckBoxes(tempArray);
+        console.log("checkbox changed", checkBoxes);
+    };
+
     const NormalMode = () => {
         return (
             <React.Fragment>
                 <List dense={false}>
                     {DisplayList.map((item, index) => (
                         <ListItem key={index}>
-                            <ListItemText primary={item} />
+                            <Checkbox
+                                id={String(index)}
+                                checked={checkBoxes[index]}
+                                color="primary"
+                                onChange={(e) => handleCheckboxChange(e)}
+                            />
+                            <ListItemText
+                                style={{ textDecoration: checkBoxes[index] ? "line-through" : "none" }}
+                                primary={item}
+                            />
                         </ListItem>
                     ))}
                 </List>
