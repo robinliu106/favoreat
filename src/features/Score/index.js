@@ -1,6 +1,5 @@
 import React from "react";
 import ReactStars from "react-stars";
-import SkeletonLoader from "../SkeletonLoader";
 
 const Score = ({ rating = 0, handleRatingChange, edit = true }) => {
     return (

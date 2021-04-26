@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import InfoIcon from "@material-ui/icons/Info";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 import { useSelector, useDispatch } from "react-redux";
 import * as recipePageSlice from "./recipePageSlice";

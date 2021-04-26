@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import * as searchAPI from "./searchAPI";
 import Menu from "../Menu";
@@ -17,9 +17,9 @@ const Search = () => {
         e.preventDefault();
         const status = await searchAPI.fetchURL(url);
 
-        if (status == "404") {
+        if (status === "404") {
             setHelperText("Could not find a recipe at this url");
-        } else if (status == "201") {
+        } else if (status === "201") {
             <Redirect push to="/" />;
         }
 

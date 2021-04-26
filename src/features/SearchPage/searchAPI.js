@@ -22,7 +22,7 @@ export const fetchURL = async (url) => {
 
     const recipeSchema = schemaNode?.children[0]?.data ?? 404;
     // console.log(recipeSchema);
-    if (recipeSchema == 404) return 404;
+    if (recipeSchema === 404) return 404;
 
     let recipeJSON = JSON.parse(recipeSchema);
     // console.log("recipeJSON", recipeJSON);
