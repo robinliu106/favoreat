@@ -6,8 +6,9 @@ import firebase from "../../database/firebase";
 
 import Menu from "../Menu";
 import Score from "./Score";
-import RenderList from "./RenderList";
+import RenderPage from "./RenderPage";
 import BottomNav from "./BottomNav";
+import SkeletonLoader from "../SkeletonLoader";
 
 const RecipePage = () => {
     const page = useSelector(recipePageSlice.selectPage);
@@ -58,16 +59,16 @@ const RecipePage = () => {
         switch (parseInt(page)) {
             case 0:
                 if (recipe.recipeIngredient) {
-                    return <RenderList list={recipe.recipeIngredient} />;
+                    return <RenderPage list={recipe.recipeIngredient} />;
                 } else {
-                    return <h6>Loading Ingredients</h6>;
+                    return <SkeletonLoader />;
                 }
 
             case 1:
                 if (recipe.recipeInstructions) {
-                    return <RenderList list={recipe.recipeInstructions} />;
+                    return <RenderPage list={recipe.recipeInstructions} />;
                 } else {
-                    return <h6>Loading Instructions</h6>;
+                    return <SkeletonLoader />;
                 }
             case 2:
                 if (recipe.nutrition) {
@@ -76,22 +77,38 @@ const RecipePage = () => {
                     const nutritionArray = nutritionEntries.map((item) => formatNutrition(item[0]) + ": " + item[1]);
 
                     // console.log("nutritionarray", nutritionArray);
-                    return <RenderList list={nutritionArray} />;
+                    return <RenderPage list={nutritionArray} />;
                 } else {
-                    return <h6>Loading Nutrition</h6>;
+                    return <SkeletonLoader />;
                 }
         }
+    };
+
+    const Page = () => {
+        return (
+            <div>
+                {recipe.name}
+                <Score recipe={recipe} id={id} />
+                <SwitchPage />
+            </div>
+        );
     };
 
     return (
         <div>
             <Menu />
-            {recipe ? recipe.name : null}
-            {recipe ? <Score recipe={recipe} id={id} /> : null}
-            {recipe ? <SwitchPage /> : null}
+            <Page />
             <BottomNav />
         </div>
     );
 };
 
 export default RecipePage;
+
+/*
+            {recipe ? <Page /> : <SkeletonLoader />}
+
+{recipe ? recipe.name : null}
+            {recipe ?  : null}
+            {recipe ?  : null}
+*/

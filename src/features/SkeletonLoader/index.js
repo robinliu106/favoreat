@@ -7,8 +7,14 @@ const SkeletonLoader = () => {
             <div className="row">
                 <div className="col">
                     <div className="skeleton-card container-sm">
-                        <div className="skeleton-card__image loading"></div>
-                        <div className="skeleton-card__title loading"></div>
+                        <div className="skeleton-card__description loading"></div>
+                        <div className="skeleton-card__description loading"></div>
+                        <div className="skeleton-card__description loading"></div>
+                        <div className="skeleton-card__description loading"></div>
+                        <div className="skeleton-card__description loading"></div>
+                        <div className="skeleton-card__description loading"></div>
+                        <div className="skeleton-card__description loading"></div>
+                        <div className="skeleton-card__description loading"></div>
                         <div className="skeleton-card__description loading"></div>
                     </div>
                 </div>
@@ -18,3 +24,9 @@ const SkeletonLoader = () => {
 };
 
 export default SkeletonLoader;
+
+/*
+
+<div className="skeleton-card__image loading"></div>
+                        <div className="skeleton-card__title loading"></div>
+                        */

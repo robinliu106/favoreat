@@ -27,8 +27,8 @@
 
 /* skeleton-Card description */
 .skeleton-card__description {
-    padding: 8px;
-    font-size: 8px;
+    padding: 6px;
+    font-size: 6px;
 }
 
 .skeleton-card__description.loading {

@@ -3,7 +3,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
-const RenderList = ({ list }) => {
+const RenderPage = ({ list }) => {
     // console.log(list);
     // console.log("rendinger ingredients", list);
     return (
@@ -19,4 +19,4 @@ const RenderList = ({ list }) => {
     );
 };
 
-export default RenderList;
+export default RenderPage;
