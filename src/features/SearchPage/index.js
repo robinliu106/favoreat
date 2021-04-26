@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import * as searchAPI from "./searchAPI";
 import Menu from "../Menu";
+import { Redirect } from "react-router-dom";
 
 const Search = () => {
     const [url, setUrl] = useState("");
@@ -18,14 +19,17 @@ const Search = () => {
 
         if (status == "404") {
             setHelperText("Could not find a recipe at this url");
+        } else if (status == "201") {
+            <Redirect push to="/" />;
         }
+
         console.log(url);
         setUrl("");
     };
     return (
         <div>
             <Menu />
-            <form onSubmit={(e) => handleSubmit(e)} autocomplete={"off"}>
+            <form onSubmit={(e) => handleSubmit(e)} autoComplete={"off"}>
                 <TextField
                     id="outlined-full-width"
                     label="URL"

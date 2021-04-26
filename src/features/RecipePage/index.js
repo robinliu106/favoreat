@@ -5,12 +5,13 @@ import * as recipePageSlice from "./recipePageSlice";
 import firebase from "../../database/firebase";
 
 import Menu from "../Menu";
-import Score from "./Score";
+import Score from "../Score";
 import RenderPage from "./RenderPage";
 import BottomNav from "./BottomNav";
 import SkeletonLoader from "../SkeletonLoader";
 
 const RecipePage = () => {
+    const recipeRef = firebase.database().ref("recipes");
     const page = useSelector(recipePageSlice.selectPage);
 
     const [recipe, setRecipe] = useState({});
@@ -26,11 +27,16 @@ const RecipePage = () => {
     }, []);
 
     const getRecipe = async (id) => {
-        const recipeRef = firebase.database().ref("recipes");
         const snapshot = await recipeRef.child(id).once("value");
         const value = await snapshot.val();
         console.log("get recipe", value);
         setRecipe(value);
+    };
+
+    const handleRatingChange = (newRating) => {
+        recipeRef.child(id).update({
+            rating: newRating,
+        });
     };
 
     const formatNutrition = (key) => {
@@ -55,7 +61,6 @@ const RecipePage = () => {
     };
 
     const SwitchPage = () => {
-        // console.log("page", page);
         switch (parseInt(page)) {
             case 0:
                 if (recipe.recipeIngredient) {
@@ -73,10 +78,8 @@ const RecipePage = () => {
             case 2:
                 if (recipe.nutrition) {
                     const nutritionEntries = Object.entries(recipe.nutrition);
-                    // console.log("nutritionEntries", nutritionEntries);
                     const nutritionArray = nutritionEntries.map((item) => formatNutrition(item[0]) + ": " + item[1]);
 
-                    // console.log("nutritionarray", nutritionArray);
                     return <RenderPage list={nutritionArray} />;
                 } else {
                     return <SkeletonLoader />;
@@ -84,11 +87,11 @@ const RecipePage = () => {
         }
     };
 
-    const Page = () => {
+    const PageInfo = () => {
         return (
             <div>
                 {recipe.name}
-                <Score recipe={recipe} id={id} />
+                <Score rating={recipe.rating} id={id} handleRatingChange={handleRatingChange} />
                 <SwitchPage />
             </div>
         );
@@ -97,18 +100,10 @@ const RecipePage = () => {
     return (
         <div>
             <Menu />
-            <Page />
+            <PageInfo />
             <BottomNav />
         </div>
     );
 };
 
 export default RecipePage;
-
-/*
-            {recipe ? <Page /> : <SkeletonLoader />}
-
-{recipe ? recipe.name : null}
-            {recipe ?  : null}
-            {recipe ?  : null}
-*/

@@ -4,6 +4,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Menu from "../Menu";
+import Score from "../Score";
 const RecipeList = () => {
     const [recipes, setRecipes] = useState();
 
@@ -41,6 +42,7 @@ const RecipeList = () => {
                             key={recipe.id}
                         >
                             <ListItemText primary={recipe.name} />
+                            <Score rating={recipe.rating} />
                         </ListItem>
                     ))}
                 </List>

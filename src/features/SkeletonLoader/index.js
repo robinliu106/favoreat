@@ -1,21 +1,16 @@
 import React from "react";
 import "./SkeletonLoader.css";
 
-const SkeletonLoader = () => {
+const SkeletonLoader = ({ num = 10 }) => {
+    const blankArray = new Array(5).fill(0);
     return (
         <div className="container-sm">
             <div className="row">
                 <div className="col">
                     <div className="skeleton-card container-sm">
-                        <div className="skeleton-card__description loading"></div>
-                        <div className="skeleton-card__description loading"></div>
-                        <div className="skeleton-card__description loading"></div>
-                        <div className="skeleton-card__description loading"></div>
-                        <div className="skeleton-card__description loading"></div>
-                        <div className="skeleton-card__description loading"></div>
-                        <div className="skeleton-card__description loading"></div>
-                        <div className="skeleton-card__description loading"></div>
-                        <div className="skeleton-card__description loading"></div>
+                        {blankArray.map((value, index) => (
+                            <div className="skeleton-card__description loading" key={index}></div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -24,9 +19,3 @@ const SkeletonLoader = () => {
 };
 
 export default SkeletonLoader;
-
-/*
-
-<div className="skeleton-card__image loading"></div>
-                        <div className="skeleton-card__title loading"></div>
-                        */
