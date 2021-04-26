@@ -20,15 +20,12 @@ const BottomNav = () => {
     const page = useSelector(recipePageSlice.selectPage);
 
     const classes = useStyles();
-    // const [page, setPage] = useState(0);
 
     return (
         <div>
             <BottomNavigation
                 value={page}
                 onChange={(event, newValue) => {
-                    // console.log("newValue", newValue);
-                    // setPage(newValue);
                     dispatch(recipePageSlice.setPage(newValue));
                 }}
                 showLabels

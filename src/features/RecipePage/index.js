@@ -1,33 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import * as recipePageSlice from "./recipePageSlice";
 
 import firebase from "../../database/firebase";
 
-import RenderList from "./RenderList";
 import Menu from "../Menu";
-
+import Score from "./Score";
+import RenderList from "./RenderList";
 import BottomNav from "./BottomNav";
-import * as recipePageSlice from "./recipePageSlice";
 
 const RecipePage = () => {
     const page = useSelector(recipePageSlice.selectPage);
 
     const [recipe, setRecipe] = useState({});
+    const [id, setID] = useState();
 
     useEffect(() => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
 
-        getRecipe(urlParams.get("id"));
+        let id = urlParams.get("id");
+        getRecipe(id);
+        setID(id);
     }, []);
 
     const getRecipe = async (id) => {
         const recipeRef = firebase.database().ref("recipes");
         const snapshot = await recipeRef.child(id).once("value");
-        const value = snapshot.val();
-        // console.log(value);
+        const value = await snapshot.val();
+        console.log("get recipe", value);
         setRecipe(value);
-        // console.log(value);
     };
 
     const formatNutrition = (key) => {
@@ -85,6 +87,7 @@ const RecipePage = () => {
         <div>
             <Menu />
             {recipe ? recipe.name : null}
+            {recipe ? <Score recipe={recipe} id={id} /> : null}
             {recipe ? <SwitchPage /> : null}
             <BottomNav />
         </div>

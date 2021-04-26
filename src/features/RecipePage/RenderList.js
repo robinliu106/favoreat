@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import TextField from "@material-ui/core/TextField";
 
 const RenderList = ({ list }) => {
     // console.log(list);
@@ -21,4 +20,3 @@ const RenderList = ({ list }) => {
 };
 
 export default RenderList;
-//<TextField label="Standard" value={item} />
