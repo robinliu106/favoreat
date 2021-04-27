@@ -21,7 +21,7 @@ export const updateAsync = createAsyncThunk("firebase/updateAsync", async ({ id,
 
 export const deleteAsync = createAsyncThunk("firebase/deleteAsync", async ({ id }) => {
     console.log("delete async");
-    const response = await recipeRef.child(id).removeValue(); //firebase.database().collection("recipes").doc(id).delete();
+    const response = await recipeRef.child(id).remove(); //firebase.database().collection("recipes").doc(id).delete();
     return response;
 });
 

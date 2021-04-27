@@ -5,9 +5,11 @@ import TextField from "@material-ui/core/TextField";
 import { useSelector, useDispatch } from "react-redux";
 import * as firebaseSlice from "../../database/firebaseSlice";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import { useHistory } from "react-router-dom";
 
 const RenderPage = ({ list, id = null, page }) => {
     const dispatch = useDispatch();
+    let history = useHistory();
 
     const [editMode, setEditMode] = useState(false);
     const [DisplayList, setDisplayList] = useState(list);
@@ -40,8 +42,11 @@ const RenderPage = ({ list, id = null, page }) => {
     const handleDeleteButton = () => {
         console.log("handle delete button");
         if (editMode === true && id != null) {
-            console.log("running delete");
-            dispatch(firebaseSlice.deleteAsync({ id }));
+            const confirmDelete = window.confirm("Are you sure you want to delete this recipe?");
+            if (confirmDelete) {
+                dispatch(firebaseSlice.deleteAsync({ id }));
+                history.push("/");
+            }
         }
     };
 
